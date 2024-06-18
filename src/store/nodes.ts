@@ -24,6 +24,7 @@ type Actions = {
   connectEdge: (edge: Edge | Connection) => void;
   setSelectedNode: (nodeId: Node | null) => void;
   updateNodelabel: (nodeId: string, label: string) => void;
+  addNode: (node: Node) => void;
 };
 
 const initialState: State = {
@@ -53,6 +54,13 @@ const useNodesStore = create<State & Actions>((set, get) => ({
   connectEdge(edge) {
     set({
       edges: addEdge(edge, get().edges),
+    });
+  },
+
+  addNode(node) {
+    node.id = (get().nodes.length + 1).toString();
+    set({
+      nodes: [...get().nodes, node],
     });
   },
 

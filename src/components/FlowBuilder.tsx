@@ -1,19 +1,28 @@
-import ReactFlow, { NodeTypes, OnSelectionChangeParams, ReactFlowProvider } from 'reactflow';
+import ReactFlow, {
+  Node,
+  NodeTypes,
+  OnSelectionChangeParams,
+  ReactFlowProvider,
+  type ReactFlowInstance,
+} from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import useNodesStore from '../store/nodes';
 import { MESSAGE_NODE_TYPE } from '../constants/constants';
 import MessageNode from './MessageNode';
-import { useCallback } from 'react';
-import { useShallow } from 'zustand/react/shallow';
+import { DragEvent, useCallback, useState } from 'react';
 
 const nodeTypes: NodeTypes = {
   [MESSAGE_NODE_TYPE]: MessageNode,
 };
 
 function FlowBuilder() {
-  const nodes = useNodesStore(useShallow((state) => state.nodes));
-  const edges = useNodesStore(useShallow((state) => state.edges));
+  const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
+
+  const nodes = useNodesStore((state) => state.nodes);
+  const edges = useNodesStore((state) => state.edges);
+
+  const addNode = useNodesStore((state) => state.addNode);
 
   const onNodesChange = useNodesStore((state) => state.onNodesChange);
   const onEdgesChange = useNodesStore((state) => state.onEdgesChange);
@@ -28,6 +37,38 @@ function FlowBuilder() {
     [setSelectedNode]
   );
 
+  const onDragOver = (event: DragEvent) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  };
+
+  const onDrop = (event: DragEvent) => {
+    event.preventDefault();
+
+    // BUG: type does not recieve the value
+    const type = event.dataTransfer.getData('data') || 'message';
+
+    // check if the dropped element is valid
+    if (typeof type === 'undefined' || !type) {
+      return;
+    }
+
+    const position = reactFlowInstance!.screenToFlowPosition({
+      x: event.clientX,
+      y: event.clientY,
+    });
+
+    const newNode: Node = {
+      id: '',
+      type,
+      position,
+      data: { label: `${type} node` },
+      selected: true,
+    };
+
+    addNode(newNode);
+  };
+
   return (
     <div className="flex-1 h-full">
       <ReactFlow
@@ -38,8 +79,10 @@ function FlowBuilder() {
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         onSelectionChange={onSelectionChange}
-        selectionOnDrag={false}
         selectNodesOnDrag={false}
+        onInit={setReactFlowInstance}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
       />
     </div>
   );
