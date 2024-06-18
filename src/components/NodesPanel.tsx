@@ -17,7 +17,7 @@ function NodesPanel() {
     <div className="px-5 py-5 grid grid-cols-2 gap-5">
       {NODE_TYPES.map((type) => {
         const NodeComponent = NODES[type];
-        return <NodeComponent draggable onDrag={(e) => onDragStart(e, type)} />;
+        return <NodeComponent key={type} draggable onDrag={(e) => onDragStart(e, type)} />;
       })}
     </div>
   );

@@ -52,6 +52,14 @@ const useNodesStore = create<State & Actions>((set, get) => ({
   },
 
   connectEdge(edge) {
+    // check if a edge with same source already exists
+    const existingEdgeWithSameSource = get().edges.find((e) => e.source === edge.source);
+
+    if (existingEdgeWithSameSource) {
+      console.log('edge with same source already exists');
+      return;
+    }
+
     set({
       edges: addEdge(edge, get().edges),
     });
