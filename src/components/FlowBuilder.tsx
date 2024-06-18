@@ -2,7 +2,6 @@ import ReactFlow, {
   Node,
   NodeTypes,
   OnSelectionChangeParams,
-  ReactFlowProvider,
   type ReactFlowInstance,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
@@ -88,12 +87,4 @@ function FlowBuilder() {
   );
 }
 
-function FlowBuilderWithProvider() {
-  return (
-    <ReactFlowProvider>
-      <FlowBuilder />
-    </ReactFlowProvider>
-  );
-}
-
-export default FlowBuilderWithProvider;
+export default FlowBuilder;
