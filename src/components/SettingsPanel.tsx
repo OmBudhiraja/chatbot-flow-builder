@@ -1,21 +1,15 @@
 import { useEffect, useState } from 'react';
 import { IoMdArrowBack as BackIcon } from 'react-icons/io';
 import useNodesStore from '../store/nodes';
+import { useStoreApi } from 'reactflow';
 
 function SettingsPanel() {
-  const [nodeLabel, setNodeLabel] = useState('');
-
-  const selectedNode = useNodesStore((state) => state.selectedNode);
-  const setSelectedNode = useNodesStore((state) => state.setSelectedNode);
+  const selectedNode = useNodesStore((state) => state.nodes).find((node) => node.selected);
   const updateNodelabel = useNodesStore((state) => state.updateNodelabel);
 
-  useEffect(() => {
-    if (!selectedNode) {
-      return;
-    }
+  const [nodeLabel, setNodeLabel] = useState(selectedNode?.data.label ?? '');
 
-    setNodeLabel(selectedNode.data.label);
-  }, [selectedNode]);
+  const flowInternalStore = useStoreApi();
 
   useEffect(() => {
     if (!selectedNode) {
@@ -34,7 +28,7 @@ function SettingsPanel() {
         <button
           className="absolute top-1/2 -translate-y-1/2 left-5"
           onClick={() => {
-            setSelectedNode(null);
+            flowInternalStore.getState().resetSelectedElements();
           }}
         >
           <BackIcon size={16} />

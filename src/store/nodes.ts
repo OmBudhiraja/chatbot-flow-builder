@@ -15,15 +15,12 @@ import { TEXT_NODE_TYPE } from '../constants/constants';
 type State = {
   nodes: Node[];
   edges: Edge[];
-  selectedNode: Node | null;
-  test?: string;
 };
 
 type Actions = {
   onNodesChange: (changes: NodeChange[]) => void;
   onEdgesChange: (changes: EdgeChange[]) => void;
   connectEdge: (edge: Edge | Connection) => void;
-  setSelectedNode: (nodeId: Node | null) => void;
   updateNodelabel: (nodeId: string, label: string) => void;
   addNode: (node: Node) => void;
 };
@@ -44,7 +41,6 @@ const initialState: State = {
     },
   ],
   edges: [],
-  selectedNode: null,
 };
 
 const useNodesStore = create<State & Actions>((set, get) => ({
@@ -87,28 +83,6 @@ const useNodesStore = create<State & Actions>((set, get) => ({
     set({
       nodes: [...get().nodes, node],
     });
-  },
-
-  setSelectedNode(node: Node | null) {
-    const prevNodeId = node ? node.id : get().selectedNode?.id;
-
-    if (prevNodeId) {
-      set({
-        selectedNode: node,
-        nodes: applyNodeChanges(
-          [
-            {
-              id: prevNodeId,
-              type: 'select',
-              selected: !!node,
-            },
-          ],
-          get().nodes
-        ),
-      });
-    } else {
-      set({ selectedNode: node });
-    }
   },
 
   updateNodelabel(nodeId, label) {

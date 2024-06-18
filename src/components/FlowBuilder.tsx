@@ -1,15 +1,10 @@
-import ReactFlow, {
-  type Node,
-  type NodeTypes,
-  type OnSelectionChangeParams,
-  type ReactFlowInstance,
-} from 'reactflow';
+import ReactFlow, { type Node, type NodeTypes, type ReactFlowInstance } from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import useNodesStore from '../store/nodes';
 import { TEXT_NODE_TYPE } from '../constants/constants';
 import TextNode from './TextNode';
-import { DragEvent, useCallback, useState } from 'react';
+import { DragEvent, useState } from 'react';
 
 const nodeTypes: NodeTypes = {
   [TEXT_NODE_TYPE]: TextNode,
@@ -26,15 +21,6 @@ function FlowBuilder() {
   const onNodesChange = useNodesStore((state) => state.onNodesChange);
   const onEdgesChange = useNodesStore((state) => state.onEdgesChange);
   const onConnect = useNodesStore((state) => state.connectEdge);
-
-  const setSelectedNode = useNodesStore((state) => state.setSelectedNode);
-
-  const onSelectionChange = useCallback(
-    (ele: OnSelectionChangeParams) => {
-      setSelectedNode(ele.nodes[0] ?? null);
-    },
-    [setSelectedNode]
-  );
 
   const onDragOver = (event: DragEvent) => {
     event.preventDefault();
@@ -77,7 +63,6 @@ function FlowBuilder() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
-        onSelectionChange={onSelectionChange}
         selectNodesOnDrag={false}
         onInit={setReactFlowInstance}
         onDrop={onDrop}
