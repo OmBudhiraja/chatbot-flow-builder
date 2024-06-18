@@ -2,6 +2,7 @@ import {
   Connection,
   Edge,
   EdgeChange,
+  MarkerType,
   Node,
   NodeChange,
   addEdge,
@@ -56,9 +57,15 @@ const useNodesStore = create<State & Actions>((set, get) => ({
     const existingEdgeWithSameSource = get().edges.find((e) => e.source === edge.source);
 
     if (existingEdgeWithSameSource) {
-      console.log('edge with same source already exists');
       return;
     }
+
+    // apply egde end markers
+    (edge as Edge).markerEnd = {
+      type: MarkerType.Arrow,
+      height: 20,
+      width: 20,
+    };
 
     set({
       edges: addEdge(edge, get().edges),
