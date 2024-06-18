@@ -1,4 +1,4 @@
-import { Edge } from 'reactflow';
+import { type Edge } from 'reactflow';
 import useNodesStore from '../store/nodes';
 import toast from 'react-hot-toast';
 

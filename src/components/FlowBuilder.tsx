@@ -1,18 +1,18 @@
 import ReactFlow, {
-  Node,
-  NodeTypes,
-  OnSelectionChangeParams,
+  type Node,
+  type NodeTypes,
+  type OnSelectionChangeParams,
   type ReactFlowInstance,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 
 import useNodesStore from '../store/nodes';
-import { MESSAGE_NODE_TYPE } from '../constants/constants';
-import MessageNode from './MessageNode';
+import { TEXT_NODE_TYPE } from '../constants/constants';
+import TextNode from './TextNode';
 import { DragEvent, useCallback, useState } from 'react';
 
 const nodeTypes: NodeTypes = {
-  [MESSAGE_NODE_TYPE]: MessageNode,
+  [TEXT_NODE_TYPE]: TextNode,
 };
 
 function FlowBuilder() {
@@ -45,7 +45,7 @@ function FlowBuilder() {
     event.preventDefault();
 
     // BUG: type does not recieve the value
-    const type = event.dataTransfer.getData('data') || 'message';
+    const type = event.dataTransfer.getData('data') || 'text';
 
     // check if the dropped element is valid
     if (typeof type === 'undefined' || !type) {
@@ -82,6 +82,7 @@ function FlowBuilder() {
         onInit={setReactFlowInstance}
         onDrop={onDrop}
         onDragOver={onDragOver}
+        deleteKeyCode={'Delete'}
       />
     </div>
   );

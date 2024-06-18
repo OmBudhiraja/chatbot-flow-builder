@@ -1,16 +1,16 @@
 import {
-  Connection,
-  Edge,
-  EdgeChange,
   MarkerType,
-  Node,
-  NodeChange,
   addEdge,
   applyEdgeChanges,
   applyNodeChanges,
+  type Connection,
+  type Edge,
+  type EdgeChange,
+  type Node,
+  type NodeChange,
 } from 'reactflow';
 import { create } from 'zustand';
-import { MESSAGE_NODE_TYPE } from '../constants/constants';
+import { TEXT_NODE_TYPE } from '../constants/constants';
 
 type State = {
   nodes: Node[];
@@ -30,8 +30,18 @@ type Actions = {
 
 const initialState: State = {
   nodes: [
-    { id: '1', position: { x: 0, y: 0 }, data: { label: '1' }, type: MESSAGE_NODE_TYPE },
-    { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } },
+    {
+      id: '1',
+      position: { x: 30, y: 200 },
+      data: { label: 'Text Message 1' },
+      type: TEXT_NODE_TYPE,
+    },
+    {
+      id: '2',
+      position: { x: 400, y: 250 },
+      data: { label: 'Text Message 2' },
+      type: TEXT_NODE_TYPE,
+    },
   ],
   edges: [],
   selectedNode: null,

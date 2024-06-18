@@ -1,9 +1,9 @@
-import { type DragEvent, HTMLAttributes } from 'react';
-import { MESSAGE_NODE_TYPE, NODE_TYPES } from '../constants/constants';
+import { type DragEvent, type HTMLAttributes } from 'react';
+import { TEXT_NODE_TYPE, NODE_TYPES } from '../constants/constants';
 import { BsChatText as MessageIcon } from 'react-icons/bs';
 
 const NODES: Record<string, (props: HTMLAttributes<HTMLDivElement>) => React.JSX.Element> = {
-  [MESSAGE_NODE_TYPE]: MessageNode,
+  [TEXT_NODE_TYPE]: CreateTextNode,
 };
 
 function NodesPanel() {
@@ -23,7 +23,7 @@ function NodesPanel() {
   );
 }
 
-function MessageNode(props: HTMLAttributes<HTMLDivElement>) {
+function CreateTextNode(props: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       {...props}

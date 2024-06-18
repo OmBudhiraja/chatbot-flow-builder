@@ -1,3 +1,3 @@
-export const MESSAGE_NODE_TYPE = 'message';
+export const TEXT_NODE_TYPE = 'text';
 
-export const NODE_TYPES = [MESSAGE_NODE_TYPE];
+export const NODE_TYPES = [TEXT_NODE_TYPE];

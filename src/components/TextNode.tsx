@@ -1,8 +1,9 @@
 import { memo } from 'react';
-import { Handle, NodeProps, Position } from 'reactflow';
+import { Handle, type NodeProps, Position } from 'reactflow';
 import { BsChatText as MessageIcon } from 'react-icons/bs';
+import whatsappIcon from '../assets/whatsappIcon.png';
 
-function MessageNode({ data, selected }: NodeProps) {
+function TextNode({ data, selected }: NodeProps) {
   return (
     <>
       <Handle type="target" position={Position.Left} style={{ height: '6px', width: '6px' }} />
@@ -16,7 +17,9 @@ function MessageNode({ data, selected }: NodeProps) {
             <MessageIcon size={14} />
             <p className="text-sm"> Send Message</p>
           </div>
-          <div></div>
+          <div>
+            <img height={20} width={20} src={whatsappIcon} alt="whatsapp icon" />
+          </div>
         </section>
         <section className="bg-white px-4 py-3 max-w-full overflow-x-hidden">
           <p className="break-words">{data.label}</p>
@@ -27,6 +30,6 @@ function MessageNode({ data, selected }: NodeProps) {
   );
 }
 
-const MemoizedMessageNode = memo(MessageNode);
+const MemoizedTextNode = memo(TextNode);
 
-export default MemoizedMessageNode;
+export default MemoizedTextNode;

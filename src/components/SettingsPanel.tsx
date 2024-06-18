@@ -39,7 +39,7 @@ function SettingsPanel() {
         >
           <BackIcon size={16} />
         </button>
-        <p className="capitalize">{selectedNode.type ?? 'Testing'}</p>
+        <p className="capitalize">Message</p>
       </div>
       <div className="px-5 py-6 flex flex-col gap-3">
         <p className="text-gray-500">Text</p>
