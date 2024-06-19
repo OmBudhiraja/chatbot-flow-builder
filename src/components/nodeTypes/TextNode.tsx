@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Handle, type NodeProps, Position } from 'reactflow';
 import { BsChatText as MessageIcon } from 'react-icons/bs';
-import whatsappIcon from '../assets/whatsappIcon.png';
+import whatsappIcon from '../../assets/whatsappIcon.png';
 
 function TextNode({ data, selected }: NodeProps) {
   return (
